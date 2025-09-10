@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:signspeak/pages/auth-page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'home.dart';
 
@@ -52,10 +53,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SignSpeak',
-      home: Home(
-        onThemeChanged: _toggleTheme,
-        themeMode: _themeMode,
-      ),
+      home: AuthPage(),
+      // home: Home(
+      //   onThemeChanged: _toggleTheme,
+      //   themeMode: _themeMode,
+      // ),
       theme: FlexThemeData.light(scheme: FlexScheme.shadBlue),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.shadBlue),
       themeMode: _themeMode,
