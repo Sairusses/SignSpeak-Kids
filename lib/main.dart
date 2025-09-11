@@ -51,13 +51,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final session = Supabase.instance.client.auth.currentSession;
     return MaterialApp(
       title: 'SignSpeak',
-      home: AuthPage(),
-      // home: Home(
-      //   onThemeChanged: _toggleTheme,
-      //   themeMode: _themeMode,
-      // ),
+      home: session == null
+          ? AuthPage()
+          : Home(
+        onThemeChanged: _toggleTheme,
+        themeMode: _themeMode,
+      ),
       theme: FlexThemeData.light(scheme: FlexScheme.shadBlue),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.shadBlue),
       themeMode: _themeMode,
