@@ -19,6 +19,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
 
   bool _isSigningUp = false;
   bool _isLoading = false;
+  bool isVisible = false;
   ThemeMode _themeMode = ThemeMode.light;
 
   Future<void> _toggleTheme(bool isDark) async {
@@ -194,10 +195,23 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
   Widget _buildTextField(TextEditingController controller, String hint, IconData icon, bool isPassword) {
     return TextField(
       controller: controller,
-      obscureText: isPassword,
+      obscureText: isPassword && isVisible,
       style: const TextStyle(fontWeight: FontWeight.bold),
       decoration: InputDecoration(
         prefixIcon: Icon(icon, color: Colors.purpleAccent),
+        suffixIcon: IconButton(
+            onPressed: () {
+             if(isPassword){
+               setState(() {
+                 isVisible = !isVisible;
+               });
+             }else{
+                controller.clear();
+              }
+            },
+            icon: isPassword ? Icon(isVisible ? Icons.visibility_off_rounded : Icons.visibility_rounded, color: Colors.grey[400])
+                : Icon(Icons.close_rounded, color: Colors.grey[400])
+        ),
         hintText: hint,
         hintStyle: TextStyle(color: Colors.grey[400]),
         filled: true,
