@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-// 1. DATA MODEL
+import 'alphabets-quiz.dart';
+
 class AwarenessSection {
   final String title;
   final List<String> items;
@@ -17,16 +19,13 @@ class AwarenessSection {
   });
 }
 
-// 2. PALETTE & DATA (Moved into a container class or top level)
 class AwarenessData {
-  // Original Kid-Friendly Colors
   static const Color kBananaYellow = Color(0xFFFFD93D);
   static const Color kBubblegumPink = Color(0xFFFF6B6B);
   static const Color kLimeGreen = Color(0xFF6BCB77);
   static const Color kSkyBlue = Color(0xFF4CB5F9);
   static const Color kDeepNavy = Color(0xFF2C3E50);
 
-  // NEW BACKGROUND COLORS
   static const Color kSoftLavender = Color(0xFFEFE8FF); // New main background
   static const Color kPalePinkSecondary = Color(0xFFFFECF0); // New accent for bubbles
 
@@ -91,20 +90,14 @@ class AwarenessPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Define the colors for the decorative bubbles
     const Color bubble1Color = AwarenessData.kBubblegumPink;
     const Color bubble2Color = AwarenessData.kLimeGreen;
 
     return Scaffold(
-      // Set the new background color
       backgroundColor: AwarenessData.kSoftLavender,
 
       body: Stack(
         children: [
-          // ------------------------------------
-          // 1. DECORATIVE BACKGROUND BUBBLES
-          // ------------------------------------
-          // Decorative Background Bubble 1 (Top Left - Pink)
           Positioned(
             top: -50,
             left: -50,
@@ -142,6 +135,7 @@ class AwarenessPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  _buildQuizButton(context),
                   const SizedBox(height: 20),
                   // Fun Header
                   Container(
@@ -196,6 +190,49 @@ class AwarenessPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+  // Add this inside the AlphabetsPage Stack or as a FloatingActionButton
+  Widget _buildQuizButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AlphabetQuizMenuPage())
+      ),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFFF9F1C), Color(0xFFFF6B6B)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: Colors.white, width: 4),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF6B6B).withOpacity(0.4),
+              blurRadius: 10,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
+            const SizedBox(width: 8),
+            Text(
+              "QUIZ TIME!",
+              style: GoogleFonts.fredoka(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
