@@ -61,9 +61,6 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
       backgroundColor: bgColor,
       body: Stack(
         children: [
-          // ------------------------------------------------
-          // 1. PLAYFUL BACKGROUND SHAPES (STACK & CIRCLES)
-          // ------------------------------------------------
           if (!isDark) ...[
             Positioned(
               top: -50,
@@ -87,9 +84,6 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
             ),
           ],
 
-          // ------------------------------------------------
-          // 2. MAIN CONTENT
-          // ------------------------------------------------
           loading
               ? const Center(child: CircularProgressIndicator(color: Color(0xFFFF6B6B)))
               : SafeArea(
@@ -102,16 +96,16 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(4), // Space for the "inner" feel
+                      padding: const EdgeInsets.all(4),
                       decoration: BoxDecoration(
-                        color: Colors.orangeAccent, // Brighter, kid-friendly orange
-                        shape: BoxShape.circle, // Circular is friendlier
-                        border: Border.all(color: Colors.white, width: 3), // Bold white outline
+                        color: Colors.orangeAccent,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
                         boxShadow: [
                           BoxShadow(
                             color: Colors.orange.withOpacity(0.5),
                             blurRadius: 10,
-                            offset: const Offset(0, 4), // Deeper shadow for 3D look
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -124,7 +118,7 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
                     const SizedBox(width: 8),
                     Text(
                       "ALPHABETS",
-                      style: GoogleFonts.fredoka( // Friendly rounded font
+                      style: GoogleFonts.fredoka(
                         fontSize: 28,
                         fontWeight: FontWeight.w700,
                         color: isDark ? Colors.white : const Color(0xFF2D3436),
@@ -138,7 +132,7 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
 
                 const SizedBox(height: 15),
 
-                // DISPLAY AREA (TV / BOARD STYLE)
+                // DISPLAY AREA
                 Expanded(
                   flex: 4,
                   child: Container(
@@ -155,7 +149,7 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
                       boxShadow: [
                         BoxShadow(
                           color: const Color(0xFF4ECDC4).withOpacity(0.4),
-                          blurRadius: 0, // Solid shadow for cartoon look
+                          blurRadius: 0,
                           offset: const Offset(0, 8),
                         ),
                       ],
@@ -174,7 +168,7 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
 
                 const SizedBox(height: 25),
 
-                // KEYBOARD GRID (CANDY BLOCKS)
+                // KEYBOARD GRID
                 Expanded(
                   flex: 5,
                   child: Container(
@@ -229,7 +223,7 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
                               ],
                             ),
                             transform: isSelected
-                                ? Matrix4.translationValues(0, 4, 0) // Push down effect
+                                ? Matrix4.translationValues(0, 4, 0)
                                 : Matrix4.identity(),
                             child: Center(
                               child: Text(
