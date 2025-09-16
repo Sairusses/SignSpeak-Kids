@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:signspeak/pages/awareness-page.dart';
+import 'package:signspeak/pages/fun-page.dart';
 import 'package:signspeak/pages/library-page.dart';
 import 'package:signspeak/pages/settings-page.dart';
 import 'package:signspeak/pages/sign-to-text-page.dart';
@@ -154,7 +155,7 @@ class HomeState extends State<Home> {
           SignToTextPage(threshold: _threshold),
           const TextToSignPage(),
           const LibraryPage(),
-          const AwarenessPage(),
+          const FunPage(),
         ],
       ),
 
