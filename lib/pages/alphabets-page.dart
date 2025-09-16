@@ -101,6 +101,25 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                      padding: const EdgeInsets.all(4), // Space for the "inner" feel
+                      decoration: BoxDecoration(
+                        color: Colors.orangeAccent, // Brighter, kid-friendly orange
+                        shape: BoxShape.circle, // Circular is friendlier
+                        border: Border.all(color: Colors.white, width: 3), // Bold white outline
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.5),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4), // Deeper shadow for 3D look
+                          ),
+                        ],
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.arrow_back_rounded, color: Colors.white, size: 28),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ),
                     Icon(Icons.star_rounded, color: Colors.orange, size: 32),
                     const SizedBox(width: 8),
                     Text(
