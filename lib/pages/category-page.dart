@@ -60,20 +60,24 @@ class _CategoryPageState extends State<CategoryPage> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
-        // Custom "Back" button that looks like a candy/pill
+        leadingWidth: 70,
         leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4, offset: Offset(0, 2))
-                ]
-            ),
-            child: IconButton(
-              icon: const Icon(Icons.arrow_back_rounded, color: Colors.orange),
-              onPressed: () => Navigator.pop(context),
+          padding: const EdgeInsets.only(left: 16.0),
+          child: Center(
+            child: Container(
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                color: Colors.blueAccent,
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white, width: 3),
+              ),
+              child: IconButton(
+                iconSize: 22,
+                padding: EdgeInsets.zero,
+                icon: const Icon(Icons.arrow_back_rounded, size: 28, color: Colors.white),
+                onPressed: () => Navigator.pop(context),
+              ),
             ),
           ),
         ),
@@ -82,7 +86,7 @@ class _CategoryPageState extends State<CategoryPage> {
           style: GoogleFonts.fredoka(
             color: textDark,
             fontWeight: FontWeight.bold,
-            fontSize: 26, // Big title
+            fontSize: 26,
           ),
         ),
       ),
