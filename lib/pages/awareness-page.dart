@@ -122,6 +122,19 @@ class AwarenessPage extends StatelessWidget {
               ),
             ),
           ),
+          Positioned(
+            bottom: -50,
+            left: -50,
+            child: Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                // Using Pink with low opacity
+                color: bubble1Color.withOpacity(0.2),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
 
           // ------------------------------------
           // 2. MAIN SCROLLABLE CONTENT
