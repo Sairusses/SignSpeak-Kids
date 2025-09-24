@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-import 'alphabets-quiz.dart';
 
 class AwarenessSection {
   final String title;
@@ -135,7 +132,6 @@ class AwarenessPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildQuizButton(context),
                   const SizedBox(height: 20),
                   // Fun Header
                   Container(
@@ -190,49 +186,6 @@ class AwarenessPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-  // Add this inside the AlphabetsPage Stack or as a FloatingActionButton
-  Widget _buildQuizButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AlphabetQuizMenuPage())
-      ),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFFFF9F1C), Color(0xFFFF6B6B)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(30),
-          border: Border.all(color: Colors.white, width: 4),
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xFFFF6B6B).withOpacity(0.4),
-              blurRadius: 10,
-              offset: const Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 30),
-            const SizedBox(width: 8),
-            Text(
-              "QUIZ TIME!",
-              style: GoogleFonts.fredoka(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
