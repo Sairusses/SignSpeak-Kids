@@ -90,13 +90,13 @@ class _AlphabetsPageState extends State<AlphabetsPage> {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-
                 // TITLE HEADER
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(width: 10,),
                     Container(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.only(left: 4),
                       decoration: BoxDecoration(
                         color: Colors.orangeAccent,
                         shape: BoxShape.circle,
