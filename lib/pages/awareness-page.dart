@@ -82,6 +82,8 @@ class AwarenessData {
   ];
 }
 
+// ... (Keeping your AwarenessSection and AwarenessData classes the same)
+
 class AwarenessPage extends StatelessWidget {
   const AwarenessPage({super.key});
 
@@ -92,97 +94,94 @@ class AwarenessPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AwarenessData.kSoftLavender,
-
       body: Stack(
         children: [
+          // 1. BUBBLY BACKGROUND ELEMENTS
           Positioned(
             top: -50,
             left: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                // Using Pink with low opacity
-                color: bubble1Color.withOpacity(0.2),
-                shape: BoxShape.circle,
-              ),
-            ),
+            child: _buildBackgroundBubble(200, bubble1Color.withOpacity(0.2)),
           ),
-          // Decorative Background Bubble 2 (Bottom Right - Green)
           Positioned(
             bottom: 100,
             right: -30,
-            child: Container(
-              width: 150,
-              height: 150,
-              decoration: BoxDecoration(
-                // Using Green with low opacity
-                color: bubble2Color.withOpacity(0.15),
-                shape: BoxShape.circle,
-              ),
-            ),
+            child: _buildBackgroundBubble(150, bubble2Color.withOpacity(0.15)),
           ),
           Positioned(
             bottom: -50,
             left: -50,
-            child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                // Using Pink with low opacity
-                color: bubble1Color.withOpacity(0.2),
-                shape: BoxShape.circle,
-              ),
-            ),
+            child: _buildBackgroundBubble(200, bubble1Color.withOpacity(0.2)),
           ),
 
-          // ------------------------------------
-          // 2. MAIN SCROLLABLE CONTENT
-          // ------------------------------------
+          // 2. MAIN CONTENT
           SafeArea(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
-                  // Fun Header
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: AwarenessData.kBananaYellow,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.black12, width: 2),
-                    ),
-                    child: const Text(
-                      "GOOD TO KNOW",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w900,
-                        color: AwarenessData.kDeepNavy,
-                        letterSpacing: 1.0,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-
-                  const Text(
-                    "Let's Be Great Friends!",
-                    style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.w900,
-                      height: 1.1,
-                      color: AwarenessData.kDeepNavy,
-                    ),
-                  ),
                   const SizedBox(height: 10),
-                  Text(
-                    "Here is how you can communicate better with your friends who are hard-of-hearing.",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      height: 1.4,
-                      color: AwarenessData.kDeepNavy.withAlpha(150),
+
+                  // --- FIXED HEADER SECTION ---
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start, // Aligns button to top of text
+                    children: [
+                      _buildChunkyBackButton(context),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // "GOOD TO KNOW" TAG
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AwarenessData.kBananaYellow,
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(color: Colors.black12, width: 2),
+                                boxShadow: const [
+                                  BoxShadow(color: Color(0xFFE6C200), offset: Offset(0, 3)),
+                                ],
+                              ),
+                              child: const Text(
+                                "GOOD TO KNOW",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w900,
+                                  color: AwarenessData.kDeepNavy,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            // MAIN TITLE
+                            const Text(
+                              "Let's Be Great\nFriends!",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w900,
+                                height: 1.1,
+                                color: AwarenessData.kDeepNavy,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  // --- END FIXED HEADER ---
+
+                  const SizedBox(height: 15),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4),
+                    child: Text(
+                      "Here is how you can communicate better with your friends who are hard-of-hearing.",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        height: 1.4,
+                        color: AwarenessData.kDeepNavy.withOpacity(0.7),
+                      ),
                     ),
                   ),
 
@@ -202,7 +201,46 @@ class AwarenessPage extends StatelessWidget {
       ),
     );
   }
+
+  // Helper for the Back Button to keep the "Kid-Friendly" Chunky Look
+  Widget _buildChunkyBackButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.pop(context),
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.orangeAccent,
+          shape: BoxShape.circle,
+          border: Border.all(color: Colors.white, width: 3),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0xFFD35400), // Darker orange for the "3D" bottom shadow
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: const Icon(
+          Icons.arrow_back_rounded,
+          color: Colors.white,
+          size: 28,
+        ),
+      ),
+    );
+  }
+
+  // Helper for bubbles
+  Widget _buildBackgroundBubble(double size, Color color) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+      ),
+    );
+  }
 }
+
 
 class AwarenessCard extends StatefulWidget {
   final AwarenessSection section;
