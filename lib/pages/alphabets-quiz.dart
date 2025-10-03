@@ -49,16 +49,16 @@ class AlphabetQuizMenuPage extends StatefulWidget {
 }
 
 class _AlphabetQuizMenuPageState extends State<AlphabetQuizMenuPage> {
-  final TextEditingController _nameController = TextEditingController();
-  List<Map<String, dynamic>> _highScores = [];
+  late final TextEditingController _nameController;
   final user = Supabase.instance.client.auth.currentUser;
+  List<Map<String, dynamic>> _highScores = [];
   bool _loading = true;
 
   @override
   void initState() {
     super.initState();
-    final displayName = user?.userMetadata?['display_name'] ?? "";
-    _nameController.text = displayName;
+    final displayName = user?.userMetadata?['display_name'] as String? ?? '';
+    _nameController = TextEditingController(text: displayName);
     _fetchHighScores();
   }
 
