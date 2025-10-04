@@ -16,6 +16,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
   final _confirmEmailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+  final _displayNameController = TextEditingController(); // Add this
 
   bool _isSigningUp = false;
   bool _isLoading = false;
@@ -36,11 +37,15 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
 
     if (_isSigningUp) {
       if (email != _confirmEmailController.text.trim()) {
-        _showError("Emails don't match! 📧");
+        _showError("Emails don't match!");
         return;
       }
       if (password != _confirmPasswordController.text.trim()) {
-        _showError("Passwords don't match! 🔑");
+        _showError("Passwords don't match!");
+        return;
+      }
+      if(_displayNameController.text.isEmpty){
+        _showError("Please enter a display name!");
         return;
       }
     }
@@ -49,9 +54,15 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
 
     try {
       if (_isSigningUp) {
-        await Supabase.instance.client.auth.signUp(email: email, password: password);
+        await Supabase.instance.client.auth.signUp(
+          email: email,
+          password: password,
+          data: {
+            'display_name': _displayNameController.text.trim(),
+          },
+        );
         _showSuccess("Yay! Welcome to SignSpeak!");
-      } else {
+      }else {
         await Supabase.instance.client.auth.signInWithPassword(email: email, password: password);
       }
 
@@ -67,7 +78,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
         );
       }
     } catch (e) {
-      _showError("Oh no! Something went wrong.");
+      _showError("Oh no! Something went wrong. \n $e");
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -130,6 +141,10 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (_isSigningUp) ...[
+                            _buildTextField(_displayNameController, "Display Name", Icons.person_rounded, false),
+                            const SizedBox(height: 15),
+                          ],
                           _buildTextField(_emailController, "Your Email", Icons.mail_rounded, false),
                           if (_isSigningUp) ...[
                             const SizedBox(height: 15),
