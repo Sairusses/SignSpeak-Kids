@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
+// Ensure these imports point to your actual files
+import 'package:signspeak/pages/auth-page.dart';
 import 'alphabets-quiz.dart';
 import 'awareness-page.dart';
 import 'category-quiz-page.dart';
@@ -13,10 +16,7 @@ class FunPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // 1. Bubbly Background Layer
           _buildAnimatedBackground(),
-
-          // 2. Main Content Layer
           SafeArea(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -24,7 +24,7 @@ class FunPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 24.0),
                 child: Column(
                   children: [
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 10),
                     _buildKidButton(
                       context,
                       navigateTo: const AlphabetQuizMenuPage(),
@@ -54,7 +54,9 @@ class FunPage extends StatelessWidget {
                       primaryColor: const Color(0xFF72EFDD),
                       shadowColor: const Color(0xFF48BFE3),
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 40), // Added extra space before logout
+                    _buildLogoutButton(context),
+                    const SizedBox(height: 20), // Bottom padding for scrolling
                   ],
                 ),
               ),
@@ -65,6 +67,204 @@ class FunPage extends StatelessWidget {
     );
   }
 
+  // FIXED: Renamed and removed 'Positioned' wrapper
+  Widget _buildLogoutButton(BuildContext context) {
+    return SizedBox(
+      height: 56,
+      width: double.infinity, // Ensures it stretches full width
+      child: ElevatedButton(
+        onPressed: () async {
+          final confirmed = await showDialog<bool>(
+            context: context,
+            barrierDismissible: true,
+            builder: (context) {
+              bool allowLogout = false;
+
+              return Dialog(
+                backgroundColor: Colors.transparent,
+                insetPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                child: StatefulBuilder(
+                  builder: (context, setState) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFFFF3C4), Color(0xFFFFE0F0)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.12),
+                            blurRadius: 12,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Header
+                          Row(
+                            children: [
+                              Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  gradient: const LinearGradient(
+                                    colors: [Color(0xFFFFA69E), Color(0xFFFFD6A5)],
+                                  ),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.orange.withOpacity(0.25),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                                child: const Center(
+                                  child: Text('👋', style: TextStyle(fontSize: 32)),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'See you soon!',
+                                      style: GoogleFonts.fredoka(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.deepPurple,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Do you want to log out now?',
+                                      style: GoogleFonts.fredoka(
+                                        fontSize: 14,
+                                        color: Colors.deepPurple.withOpacity(0.85),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          // Switch Row
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white.withOpacity(0.9),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.check_circle_outline, color: Colors.green),
+                                      const SizedBox(width: 8),
+                                      Expanded(
+                                        child: Text(
+                                          'I\'m ready to log out',
+                                          style: GoogleFonts.fredoka(
+                                            fontSize: 14,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ),
+                                      Switch(
+                                        value: allowLogout,
+                                        activeColor: Colors.green,
+                                        activeTrackColor: Colors.greenAccent.withOpacity(0.4),
+                                        onChanged: (v) {
+                                          setState(() {
+                                            allowLogout = v;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+                          // Actions
+                          Row(
+                            children: [
+                              Expanded(
+                                child: OutlinedButton.icon(
+                                  onPressed: () => Navigator.of(context).pop(false),
+                                  icon: const Icon(Icons.close, color: Colors.deepPurple),
+                                  label: Text('Cancel', style: GoogleFonts.fredoka(color: Colors.deepPurple)),
+                                  style: OutlinedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    side: BorderSide(color: Colors.deepPurple.withOpacity(0.12)),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton.icon(
+                                  onPressed: allowLogout
+                                      ? () => Navigator.of(context).pop(true)
+                                      : null,
+                                  icon: const Icon(Icons.logout, color: Colors.white),
+                                  label: Text('Log Out', style: GoogleFonts.fredoka(color: Colors.white)),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: allowLogout ? Colors.redAccent : Colors.redAccent.withOpacity(0.5),
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                    padding: const EdgeInsets.symmetric(vertical: 12),
+                                    elevation: allowLogout ? 8 : 0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          );
+
+          if (confirmed == true) {
+            await Supabase.instance.client.auth.signOut();
+            if (context.mounted) {
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const AuthPage()),
+                    (Route<dynamic> route) => false,
+              );
+            }
+          }
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.redAccent,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          elevation: 8,
+          shadowColor: Colors.red.withOpacity(0.6),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.logout, color: Colors.white),
+            const SizedBox(width: 12),
+            Text('Log Out', style: GoogleFonts.fredoka(fontSize: 18, color: Colors.white)),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _buildAnimatedBackground() {
     return Container(
@@ -100,7 +300,6 @@ class FunPage extends StatelessWidget {
     );
   }
 
-  // Improved UI Button with a "Chunky" Kid-Friendly Look
   Widget _buildKidButton(
       BuildContext context, {
         required Widget navigateTo,
@@ -121,7 +320,6 @@ class FunPage extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           border: Border.all(color: Colors.white, width: 4),
           boxShadow: [
-            // This second shadow creates the "3D" chunky effect
             BoxShadow(
               color: shadowColor,
               offset: const Offset(0, 8),
