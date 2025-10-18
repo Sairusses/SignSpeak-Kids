@@ -3,10 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:signspeak/pages/awareness-page.dart';
 import 'package:signspeak/pages/fun-page.dart';
 import 'package:signspeak/pages/library-page.dart';
-import 'package:signspeak/pages/settings-page.dart';
 import 'package:signspeak/pages/sign-to-text-page.dart';
 import 'package:signspeak/pages/text-to-sign-page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -131,7 +129,6 @@ class HomeState extends State<Home> {
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              // Assuming you have an asset, otherwise use an Icon for testing
               Image.asset('assets/logo.png', height: 35),
               const SizedBox(width: 10),
               Text(
